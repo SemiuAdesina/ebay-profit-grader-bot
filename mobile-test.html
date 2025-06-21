@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="format-detection" content="telephone=no">
+    <title>Mobile Responsive Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        .test-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .screen-info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+        }
+        .test-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 15px 0;
+        }
+        .test-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .btn-green { background: #28a745; color: white; }
+        .btn-red { background: #dc3545; color: white; }
+        .btn-blue { background: #007bff; color: white; }
+        
+        /* Mobile responsive test styles */
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .test-container { padding: 15px; }
+            .test-buttons { flex-direction: column; }
+            .test-btn { width: 100%; padding: 12px; }
+        }
+        
+        @media (max-width: 480px) {
+            body { padding: 5px; }
+            .test-container { padding: 10px; }
+            .screen-info { font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Mobile Responsive Test</h1>
+        
+        <div class="screen-info">
+            <h3>Screen Information</h3>
+            <p><strong>Width:</strong> <span id="screenWidth"></span>px</p>
+            <p><strong>Height:</strong> <span id="screenHeight"></span>px</p>
+            <p><strong>Device:</strong> <span id="deviceType"></span></p>
+            <p><strong>Orientation:</strong> <span id="orientation"></span></p>
+        </div>
+        
+        <div class="test-section">
+            <h3>Button Layout Test</h3>
+            <p>These buttons should stack vertically on mobile devices:</p>
+            <div class="test-buttons">
+                <button class="test-btn btn-green">Search Active</button>
+                <button class="test-btn btn-red">Search Sold</button>
+                <button class="test-btn btn-blue">Search Both</button>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h3>Form Test</h3>
+            <p>Input fields should be properly sized on mobile:</p>
+            <input type="text" placeholder="Enter keywords..." style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; font-size: 16px;">
+            <textarea placeholder="Enter description..." style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; font-size: 16px; min-height: 80px;"></textarea>
+        </div>
+        
+        <div class="test-section">
+            <h3>Grid Layout Test</h3>
+            <p>This should be 2 columns on desktop, 1 column on mobile:</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
+                    <h4>Active Listings</h4>
+                    <p>Sample content for active listings section</p>
+                </div>
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
+                    <h4>Sold Listings</h4>
+                    <p>Sample content for sold listings section</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h3>Touch Target Test</h3>
+            <p>All clickable elements should be at least 44px tall on mobile:</p>
+            <button style="width: 100%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 5px; font-size: 16px; margin: 5px 0;">Large Touch Target Button</button>
+        </div>
+    </div>
+
+    <script>
+        function updateScreenInfo() {
+            document.getElementById('screenWidth').textContent = window.innerWidth;
+            document.getElementById('screenHeight').textContent = window.innerHeight;
+            
+            let deviceType = 'Desktop';
+            if (window.innerWidth <= 480) {
+                deviceType = 'Mobile (Small)';
+            } else if (window.innerWidth <= 768) {
+                deviceType = 'Mobile/Tablet';
+            } else if (window.innerWidth <= 1024) {
+                deviceType = 'Tablet';
+            }
+            document.getElementById('deviceType').textContent = deviceType;
+            
+            document.getElementById('orientation').textContent = 
+                window.innerWidth > window.innerHeight ? 'Landscape' : 'Portrait';
+        }
+        
+        // Update on load and resize
+        window.addEventListener('load', updateScreenInfo);
+        window.addEventListener('resize', updateScreenInfo);
+        
+        // Add mobile-specific CSS for grid
+        const style = document.createElement('style');
+        style.textContent = `
+            @media (max-width: 768px) {
+                .test-section div[style*="grid-template-columns"] {
+                    grid-template-columns: 1fr !important;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html> 

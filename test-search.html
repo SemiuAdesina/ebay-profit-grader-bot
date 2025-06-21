@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eBay Search Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .search-box { margin: 20px 0; }
+        input[type="text"] { padding: 10px; width: 300px; margin-right: 10px; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+        .results { margin-top: 20px; }
+        .active { color: green; }
+        .sold { color: red; }
+        .item { border: 1px solid #ddd; padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .price { font-weight: bold; color: #28a745; }
+        .condition { font-style: italic; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>eBay Search Test</h1>
+        <p>Test the new combined search functionality that shows both active and sold listings.</p>
+        
+        <div class="search-box">
+            <input type="text" id="keywords" placeholder="Enter keywords (e.g., 'book', 'camera')" value="book">
+            <button onclick="searchActive()">Search Active</button>
+            <button onclick="searchSold()">Search Sold</button>
+            <button onclick="searchBoth()">Search Both</button>
+        </div>
+        
+        <div id="results" class="results"></div>
+    </div>
+
+    <script>
+        async function searchActive() {
+            const keywords = document.getElementById('keywords').value;
+            try {
+                const response = await fetch('/api/active', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ keywords, limit: 5 })
+                });
+                const data = await response.json();
+                displayResults('Active Listings', data.items || [], 'active');
+            } catch (error) {
+                document.getElementById('results').innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        }
+
+        async function searchSold() {
+            const keywords = document.getElementById('keywords').value;
+            try {
+                const response = await fetch('/api/sold', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ keywords, limit: 5 })
+                });
+                const data = await response.json();
+                displayResults('Sold Listings', data.items || [], 'sold');
+            } catch (error) {
+                document.getElementById('results').innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        }
+
+        async function searchBoth() {
+            const keywords = document.getElementById('keywords').value;
+            try {
+                const response = await fetch('/api/searchAll', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ keywords, limit: 5 })
+                });
+                const data = await response.json();
+                
+                let html = '<h2>Combined Search Results</h2>';
+                html += `<p><strong>Active:</strong> ${data.activeCount} | <strong>Sold:</strong> ${data.soldCount}</p>`;
+                
+                if (data.active && data.active.length > 0) {
+                    html += '<h3 class="active">Active Listings</h3>';
+                    html += displayItems(data.active, 'active');
+                }
+                
+                if (data.sold && data.sold.length > 0) {
+                    html += '<h3 class="sold">Sold Listings</h3>';
+                    html += displayItems(data.sold, 'sold');
+                }
+                
+                if ((!data.active || data.active.length === 0) && (!data.sold || data.sold.length === 0)) {
+                    html += '<p>No listings found</p>';
+                }
+                
+                document.getElementById('results').innerHTML = html;
+            } catch (error) {
+                document.getElementById('results').innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        }
+
+        function displayResults(title, items, type) {
+            let html = `<h2>${title}</h2>`;
+            html += `<p>Found ${items.length} items</p>`;
+            html += displayItems(items, type);
+            document.getElementById('results').innerHTML = html;
+        }
+
+        function displayItems(items, type) {
+            if (items.length === 0) {
+                return '<p>No items found</p>';
+            }
+            
+            let html = '';
+            items.forEach(item => {
+                html += `
+                    <div class="item">
+                        <div><strong>${item.title || 'No title'}</strong></div>
+                        <div class="price">$${item.price || 'N/A'}</div>
+                        <div class="condition">${item.condition || 'Unknown condition'}</div>
+                        ${item.endTime ? `<div>${type === 'sold' ? 'Sold' : 'Ends'}: ${new Date(item.endTime).toLocaleDateString()}</div>` : ''}
+                        ${item.url ? `<div><a href="${item.url}" target="_blank">View on eBay</a></div>` : ''}
+                    </div>
+                `;
+            });
+            return html;
+        }
+    </script>
+</body>
+</html> 
