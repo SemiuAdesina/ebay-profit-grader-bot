@@ -10,11 +10,11 @@ const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.json());
-app.use(express.static('public'));
+app.use(express.static(path.join(process.cwd(), 'public')));
 
 // Routes
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(process.cwd(), 'public', 'index.html'));
 });
 
 // Combined search endpoint: Get both active and sold listings
@@ -120,7 +120,7 @@ app.post('/api/analyze', async (req, res) => {
   try {
     const { keywords, bidPrice } = req.body;
 
-    console.log(`🔍 Searching for: "${keywords}" with bid price: $${bidPrice}`);
+    console.log(`�� Searching for: "${keywords}" with bid price: $${bidPrice}`);
 
     // Try Browse API first (OAuth - higher quota)
     let activeItems = [];
