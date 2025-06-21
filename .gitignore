@@ -1,157 +1,54 @@
-# Dependencies
+# -------------------------
+# Node modules & lockfiles
 node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
 package-lock.json
-
-# Environment variables
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+yarn.lock
 
 # Logs
-logs
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-lerna-debug.log*
 
-# Runtime data
-pids
+# Runtime data & PIDs
+pids/
 *.pid
-*.seed
 *.pid.lock
 
-# Coverage directory used by tools like istanbul
+# Coverage
 coverage/
 *.lcov
 
-# nyc test coverage
-.nyc_output
-
-# Grunt intermediate storage (https://gruntjs.com/creating-plugins#storing-task-files)
-.grunt
-
-# Bower dependency directory (https://bower.io/)
-bower_components
-
-# node-waf configuration
-.lock-wscript
-
-# Compiled binary addons (https://nodejs.org/api/addons.html)
-build/Release
-
-# Dependency directories
-jspm_packages/
-
-# TypeScript v1 declaration files
-typings/
-
-# TypeScript cache
-*.tsbuildinfo
-
-# Optional npm cache directory
-.npm
-
-# Optional eslint cache
-.eslintcache
-
-# Microbundle cache
-.rpt2_cache/
-.rts2_cache_cjs/
-.rts2_cache_es/
-.rts2_cache_umd/
-
-# Optional REPL history
-.node_repl_history
-
-# Output of 'npm pack'
-*.tgz
-
-# Yarn Integrity file
-.yarn-integrity
-
-# dotenv environment variables file
-.env.test
-
-# parcel-bundler cache (https://parceljs.org/)
-.cache
-.parcel-cache
-
-# Next.js build output
-.next
-
-# Nuxt.js build / generate output
-.nuxt
-dist
-
-# Gatsby files
-.cache/
-public
-
-# Storybook build outputs
-.out
-.storybook-out
-
-# Temporary folders
-tmp/
-temp/
-
-# Editor directories and files
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# OS generated files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-# eBay API specific
-# OAuth tokens (if stored locally)
-*.token
-*.access_token
-
-# Test files (if you want to exclude them)
-# tests/
-# *.test.js
-
-# Build outputs
+# Build outputs (optional)
 build/
 dist/
 
-# Documentation build
-docs/
+# Environment variables
+.env
+.env.*.local
 
-# Backup files
-*.bak
-*.backup
+# Cache
+.cache/
+.parcel-cache/
+.nyc_output/
 
-# Local development files
-.local/
-local/
+# Editor & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
 
-# Database files (if any)
-*.db
-*.sqlite
-*.sqlite3
+# REPL history
+.node_repl_history
 
-# SSL certificates
-*.pem
-*.key
-*.crt
+# Optional npm cache dir
+.npm
 
-# PM2 files
+# ESLint cache
+.eslintcache
+
+# PM2 ecosystem file
 ecosystem.config.js
 .pm2/
 
@@ -161,13 +58,38 @@ Dockerfile
 docker-compose.yml
 docker-compose.override.yml
 
+# Serverless
+.serverless/
+
 # Terraform
 *.tfstate
 *.tfstate.*
 .terraform/
 
-# Serverless
-.serverless/
+# Test files (optional: if you don’t want to push them)
+# tests/
+# *.test.js
 
-# Vercel
-.vercel 
+# eBay API OAuth tokens (if any)
+*.token
+*.access_token
+
+# SSL certs (if any)
+*.pem
+*.key
+*.crt
+
+# Local dev or backup
+*.bak
+*.backup
+local/
+tmp/
+temp/
+
+# Vercel & Next.js
+.vercel
+.next/
+
+# Storybook output
+.out
+.storybook-out

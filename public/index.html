@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="format-detection" content="telephone=no">
+    <title>eBay Profit Grader Bot</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>eBay Profit Grader Bot</h1>
+            <p>Analyze eBay listings for potential profit margins</p>
+        </header>
+
+        <main>
+            <!-- Search Section -->
+            <section class="search-section">
+                <h2>Search eBay Listings</h2>
+                <div class="search-form">
+                    <div class="form-group">
+                        <label for="searchKeywords">Search Keywords:</label>
+                        <input 
+                            type="text" 
+                            id="searchKeywords" 
+                            placeholder="Enter keywords (e.g., 'vintage camera', 'iPhone 12')"
+                            required
+                        >
+                    </div>
+                    
+                    <div class="search-buttons">
+                        <button type="button" onclick="searchActive()" class="search-btn active-btn">
+                            Search Active Listings
+                        </button>
+                        <button type="button" onclick="searchSold()" class="search-btn sold-btn">
+                            Search Sold Listings
+                        </button>
+                        <button type="button" onclick="searchBoth()" class="search-btn both-btn">
+                            Search Both (Active + Sold)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Search Results -->
+                <div id="searchResults" class="search-results" style="display: none;">
+                    <div class="results-header">
+                        <h3>Search Results</h3>
+                        <div class="results-summary">
+                            <span id="activeCount" class="count-badge active">0 Active</span>
+                            <span id="soldCount" class="count-badge sold">0 Sold</span>
+                        </div>
+                    </div>
+                    
+                    <div class="results-content">
+                        <div id="activeResults" class="results-section">
+                            <h4>Active Listings</h4>
+                            <ul id="activeList" class="items-list"></ul>
+                        </div>
+                        
+                        <div id="soldResults" class="results-section">
+                            <h4>Sold Listings</h4>
+                            <ul id="soldList" class="items-list"></ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Analysis Section -->
+            <section class="analysis-section">
+                <h2>Profit Analysis</h2>
+                <form id="analyze-form" class="analysis-form">
+                    <div class="form-group">
+                        <label for="keywords">Item Keywords:</label>
+                        <textarea 
+                            id="keywords" 
+                            name="keywords" 
+                            placeholder="Enter the item keywords..."
+                            required
+                        ></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bidPrice">Bid Price ($):</label>
+                        <input 
+                            type="number" 
+                            id="bidPrice" 
+                            name="bidPrice" 
+                            placeholder="0.00" 
+                            step="0.01" 
+                            min="0" 
+                            required
+                        >
+                    </div>
+
+                    <button type="submit" class="analyze-btn">
+                        <span class="btn-text">Analyze Profit Potential</span>
+                        <span class="btn-loading" style="display: none;">Analyzing...</span>
+                    </button>
+                </form>
+
+                <div id="results" class="results" style="display: none;">
+                    <!-- Results will be populated by JavaScript -->
+                </div>
+
+                <div id="error" class="error" style="display: none;">
+                    <h3>Error</h3>
+                    <p id="errorMessage"></p>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; <span id="currentYear"></span> eBay Profit Grader Bot. Powered by eBay API.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Set the current year in the footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+    <script src="main.js"></script>
+</body>
+</html> 
